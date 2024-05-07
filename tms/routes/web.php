@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,19 +10,28 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified', 'user'])->name('dashboard');
+})
+    ->middleware(['auth', 'verified', 'user'])
+    ->name('dashboard');
 
 // Dashboard route for admin
 
 Route::get('/admin', function () {
     return view('admin');
-})->middleware(['auth', 'verified', 'admin'])->name('admin');
+})
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('admin');
 
 // Dashboard route for Super admin
 
 Route::get('/superadmin', function () {
     return view('superadmin');
-})->middleware(['auth', 'verified', 'superadmin'])->name('superadmin');
+})
+    ->middleware(['auth', 'verified', 'superadmin'])
+    ->name('superadmin');
+
+// Resource full Routes for TasksP
+Route::get('user/task/{id}', [\App\Http\Controllers\TaskController::class, 'index'])->name('user.tasks');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,4 +39,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
