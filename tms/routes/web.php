@@ -30,8 +30,10 @@ Route::get('/superadmin', function () {
     ->middleware(['auth', 'verified', 'superadmin'])
     ->name('superadmin');
 
-// Resource full Routes for TasksP
+// Resource full Routes for TasksController
 Route::get('user/task/{id}', [\App\Http\Controllers\TaskController::class, 'index'])->name('user.tasks');
+Route::post('create/task', [\App\Http\Controllers\TaskController::class, 'store'])->name('create.task');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
