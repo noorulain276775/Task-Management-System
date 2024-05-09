@@ -33,6 +33,8 @@ Route::get('/superadmin', function () {
 // Resource full Routes for TasksController
 Route::get('user/task/{id}', [\App\Http\Controllers\TaskController::class, 'index'])->name('user.tasks');
 Route::post('create/task', [\App\Http\Controllers\TaskController::class, 'store'])->name('create.task');
+Route::post('update/task', [\App\Http\Controllers\TaskController::class, 'update'])->name('update.task');
+Route::delete('delete/task/{id}', [\App\Http\Controllers\TaskController::class, 'destroy'])->name('delete.task');
 
 
 Route::middleware('auth')->group(function () {
