@@ -33,7 +33,6 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'user_id' => 'required',
             'task_status_id' => 'required',
