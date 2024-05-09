@@ -1,6 +1,23 @@
 @extends('layouts.app')
 @section('content')
-    <div class="flex flex-col text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200 overflow-x-hidden">
+    <div
+        class="flex flex-col min-h-screen text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200 overflow-x-hidden">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="px-6 mt-6">
             <h1 class="text-2xl font-bold">Task Management System</h1>
         </div>
@@ -62,17 +79,6 @@
                                         </svg>
                                         <span class="ml-1 leading-none">{{ $task->user->name }}</span>
                                     </div>
-                                    {{-- <div class="flex items-center ml-4">
-                                        <svg class="w-4 h-4 text-gray-300 fill-current" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="ml-1 leading-none">1</span>
-                                    </div>
-                                    <img class="w-6 h-6 ml-auto rounded-full"
-                                        src='https://randomuser.me/api/portraits/women/26.jpg' /> --}}
                                 </div>
                             </div>
                         </div>
@@ -139,17 +145,6 @@
                                         </svg>
                                         <span class="ml-1 leading-none">{{ $task->user->name }}</span>
                                     </div>
-                                    {{-- <div class="flex items-center ml-4">
-                                        <svg class="w-4 h-4 text-gray-300 fill-current" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="ml-1 leading-none">1</span>
-                                    </div> --}}
-                                    {{-- <img class="w-6 h-6 ml-auto rounded-full"
-                                        src='https://randomuser.me/api/portraits/women/26.jpg' /> --}}
                                 </div>
                             </div>
                         </div>
@@ -215,16 +210,6 @@
                                         </svg>
                                         <span class="ml-1 leading-none">{{ $task->user->name }}</span>
                                     </div>
-                                    {{-- <div class="flex items-center ml-4">
-                                        <svg class="w-4 h-4 text-gray-300 fill-current" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div> --}}
-                                    {{-- <img class="w-6 h-6 ml-auto rounded-full"
-                                        src='https://randomuser.me/api/portraits/women/26.jpg' /> --}}
                                 </div>
                             </div>
                         </div>
@@ -234,7 +219,7 @@
         </div>
     </div>
 
-    {{-- update modal --}}
+    <!-- Update Modal -->
     <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -263,7 +248,7 @@
         </div>
     </div>
 
-    {{-- Create Modal --}}
+    <!-- Create Modal -->
     <div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -324,56 +309,13 @@
             </div>
         </div>
     </div>
-
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="successModalLabel">Success</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Task created/updated successfully!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Task creation/update failed. Please try again.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
-
-{{-- @section('styles')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css" />
-@endsection --}}
 
 @section('scripts')
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
     </script>

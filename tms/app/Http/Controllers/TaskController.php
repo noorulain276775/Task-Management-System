@@ -33,7 +33,6 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'user_id' => 'required',
             'task_status_id' => 'required',
@@ -47,40 +46,16 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ]);
-
-        
     
-        // $pendingCount = Task::where('user_id', $request->user_id)
-        //     ->where('task_status_id', 1)
-        //     ->count();
-        // $doneCount = Task::where('user_id', $request->user_id)
-        //     ->where('task_status_id', 3)
-        //     ->count();
-        // $ongoingCount = Task::where('user_id',$request->user_id)
-        //     ->where('task_status_id', 2)
-        //     ->count();
-    
-        // $tasks = Task::where('user_id', $request->user_id)->get();
-        return redirect()->back()->with('success', 'Task created successfully.');
-        // return view('tasks.index', compact('tasks', 'pendingCount', 'doneCount', 'ongoingCount'));
+        if ($task) {
+            return redirect()->back()->with('success', 'Task created successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to create the task.');
+        }
     }
-    
-
-    // public function show(Request $request, $id)
-    // {
-    //     $task = Task::find($id);
-    //     if ($task) {
-    //         return view('tasks.index');
-    //     } else {
-    //         return redirect()
-    //             ->route('tasks.index')
-    //             ->withErrors(['Something went Wrong']);
-    //     }
-    // }
 
     public function update(Request $request)
     {
-
         $validatedData = $request->validate([
             'task_id' => 'required',
             'title' => 'required',
@@ -102,9 +77,9 @@ class TaskController extends Controller
             $success = false;
         }
         if ($success) {
-            return redirect()->back()->with('success', 'Task updated successfully.');
+            return redirect()->back()->with('success', 'Task Updated successfully.');
         } else {
-            return redirect()->back()->with('error', 'Task can not be edited.');
+            return redirect()->back()->with('error', 'Failed to edit the task.');
         }
     }
 
@@ -115,7 +90,7 @@ class TaskController extends Controller
         if ($success) {
             return redirect()->back()->with('success', 'Task deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Task can not be deleted.');
+            return redirect()->back()->with('error', 'Failed to delete the task.');
         }
     }
 }
